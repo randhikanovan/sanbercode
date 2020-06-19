@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Latihan DOM</title>
+    <link rel="stylesheet" href="vendor/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="vendor/js/bootstrap.min.js"></script>
+    <script src="https://kit.fontawesome.com/6f076d2190.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="container" id="container">
+        <nav class="navbar navbar-light bg-light">
+            <a class="navbar-brand">Mini Ecommerce</a>
+            <form class="form-inline" id="formItem">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search"  id="keyword" aria-label="Search">
+                <button type="button" class="btn btn-outline-success my-2 my-sm-0" type="submit" id="searchItem">Search</button>
+            </form>
+            <button class="btn btn-primary" id="cart"></button>
+        </nav>
+        <div class="row col-md-12 mt-2" id="listBarang">
+        </div>
+    </div>
+    <!-- Component Card dari Bootstrap -->
+    
+</body>
+<script type="text/javascript">
+    var items = [
+        ['001', 'Keyboard Logitek', 60000, 'Keyboard yang mantap untuk kantoran', 'logitek.jpg'], 
+        ['002', 'Keyboard MSI', 300000, 'Keyboard gaming MSI mekanik', 'msi.jpg'],
+        ['003', 'Mouse Genius', 50000, 'Mouse Genius biar lebih pinter', 'genius.jpeg'],
+        ['004', 'Mouse Jerry', 30000, 'Mouse yang disukai kucing', 'jerry.jpg']
+    ]
+
+    var main = document.getElementById('listBarang');
+
+    // var card = document.getElementByClass('card');
+    // var img = document.getElementByClass('card-img-top');
+    // var title = document.getElementByClass('card-title');
+    // var desc = document.getElementByClass('card-desc');
+    // var price = document.getElementByClass('card-price');
+
+    var search = document.getElementById('searchItem');
+
+    var cart = document.getElementById('cart');
+
+    var n = 0;
+
+    cart.innerHTML = "<i class='fas fa-shopping-cart'></i> " + n;
+    
+    for (var i = 0; i < items.length; i++) {
+        var card = document.createElement('div');
+        card.classList = "card col-md-3 m-1";
+        card.style.width = '18rem';
+
+        var img = document.createElement('img');
+        img.classList = 'card-img-top mx-auto';
+        img.style.width = '100%';
+        img.style.height = '178px';
+        img.style.objectFit = 'contain';
+        img.src = "img/"+items[i][4];
+
+        var cardBody = document.createElement('div');
+        cardBody.classList.add('card-body');
+
+        var title = document.createElement('h5');
+        title.classList.add('card-title');
+        title.innerHTML = items[i][1];
+
+        var desc = document.createElement('p');
+        desc.classList.add('card-text');
+        desc.innerHTML = items[i][3];
+
+        var price = document.createElement('p');
+        price.classList.add('card-text');
+        price.innerHTML = "Rp. " + items[i][2];
+
+        var btn = document.createElement('button');
+        btn.type = "button";
+        btn.classList = "btn btn-primary";
+        btn.innerHTML = "Tambahkan ke keranjang";
+        btn.onclick = function(){
+            n += 1;
+            cart.innerHTML = "<i class='fas fa-shopping-cart'></i> " + n;
+            console.log(n);
+        };
+
+        main.appendChild(card);
+        card.appendChild(img);
+        card.appendChild(cardBody);
+        cardBody.appendChild(title);
+        cardBody.appendChild(desc);
+        cardBody.appendChild(price);
+        cardBody.appendChild(btn);
+    }
+
+    search.onclick = function(){
+        var list = document.getElementsByClassName('card-title');
+        var listCard = document.getElementsByClassName('card');
+        var key = document.getElementById('keyword').value.toLowerCase();
+        for (var j = 0; j < list.length; j++) {
+            if(list[j].innerHTML.toLowerCase().search(key) > -1){
+                listCard[j].style.display = "";
+            } else {
+                listCard[j].style.display = "none";
+            }
+        }
+
+    };
+
+</script>
+</html>
